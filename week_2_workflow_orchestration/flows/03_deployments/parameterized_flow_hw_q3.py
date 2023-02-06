@@ -77,7 +77,7 @@ def etl_web_to_gcs(year: int, month: int, color: str) -> int:
     write_bq(df_clean)
     return df_clean.count()
 
-s
+
 @flow(name="Parent ETL", log_prints=True)
 def etl_parent_flow(
     months: list[int] = [1, 2], year: int = 2021, color: str = "yellow"

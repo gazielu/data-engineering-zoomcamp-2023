@@ -25,8 +25,8 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     # df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
     df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
     df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
-    print(df.head(2))
-    print(f"columns: {df.dtypes}")
+    # print(df.head(2))
+    # print(f"columns: {df.dtypes}")
     print(f"log print rows: {len(df)}")
     return df
 
@@ -63,14 +63,14 @@ def etl_web_to_gcs() -> None:
 
     color = "green"
     year = 2020
-    month = 11
+    month = 1
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 
     df = fetch(dataset_url)
 
     df_clean = clean(df)
-    # create_local_folders(color)
+    #create_local_folders(color)
     path = write_local(df_clean, color, dataset_file)
     # path = path.replace(r'\',r'//')
     # print(path)

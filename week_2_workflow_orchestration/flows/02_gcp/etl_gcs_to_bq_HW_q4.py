@@ -10,14 +10,15 @@ def extract_from_gcs(color: str, year: int, month: int) -> Path:
     """Download trip data from GCS"""
     gcs_path = f"data/{color}/{color}_tripdata_{year}-{month:02}.parquet"
     gcs_block = GcsBucket.load("zoomcamp-prefect-gcs")
-    gcs_block.get_directory(from_path=gcs_path, local_path=f"./")
-    return Path(f"./{gcs_path}")
+    gcs_block.get_directory(from_path=gcs_path, local_path=f"./week_2_workflow_orchestration/")
+    return Path(f"./week_2_workflow_orchestration/{gcs_path}")
 
 
 @task()
-def transform(path: Path) -> pd.DataFrame:
+def transform(path: Path,log_prints=True) -> pd.DataFrame:
     """Data cleaning example"""
     df = pd.read_parquet(path)
+    print(f"log print rows: {len(df)}")
     print(f"pre: missing passenger count: {df['passenger_count'].isna().sum()}")
     df["passenger_count"].fillna(0, inplace=True)
     print(f"post: missing passenger count: {df['passenger_count'].isna().sum()}")
@@ -28,7 +29,7 @@ def transform(path: Path) -> pd.DataFrame:
 def write_bq(df: pd.DataFrame) -> None:
     """Write DataFrame to BiqQuery"""
 
-    gcp_credentials_block = GcpCredentials.load("zoom-gcp-cred")
+    gcp_credentials_block = GcpCredentials.load("zoomcamp-gcp-creds")
     
     df.to_gbq(
         destination_table="dezoomcamp.green_rides",
@@ -44,7 +45,7 @@ def etl_gcs_to_bq():
     """Main ETL flow to load data into Big Query"""
     color = "green"
     year = 2020
-    month = 1
+    month = 11
 
     path = extract_from_gcs(color, year, month)
     df = transform(path)

@@ -154,6 +154,7 @@ local path sam,e directory
 
 **Step 1:** implement ETL script to extract data from GCS, transform and load it into BigQuery. See [etl_gcs_to_bq.py](./etl_gcs_to_bq.py), specially the function ```write_to_bq``` (note that we are going to use the [GcpCredentials that we have just created](#de-zoomcamp-223---etl-with-gcp--prefect)).
 
+in diffrent from bucket we use built in block that add crdietials inside.  we used this time Gcpcredictionla.load()
 **Step 2:** create a table in BigQuery. In my project, I already have a dataset named trips_data_all, [which was created using Terraform](../week1/README.md#de-zoomcamp-132---creating-gcp-infrastructure-with-terraform). For such, in the explorer menu click on the three dots and choose "Create table".
 
 ![](./img/bq_create_table1.png)
@@ -175,6 +176,7 @@ Under "Query Results" we should get a message like this one:
 ![](./img/bq_delete_data3.png)
 
 **Step 5:** run ETL script.
+we need to insert gcp paramters for pandas pre defined df.to_gcp function
 ```
 python etl_gcs_to_bq.py
 ```
@@ -225,6 +227,12 @@ Work Queues coordinate many deployments with many agents by collecting scheduled
 Some nice references for better understanding the roles of Agents and Work Queues are: [Agents and Work Queues (Prefect docs)](https://docs.prefect.io/concepts/work-queues/) and [What’s the role of agents and work queues, and how the concept of agents differ between Prefect 1.0 and 2.0?](https://discourse.prefect.io/t/whats-the-role-of-agents-and-work-queues-and-how-the-concept-of-agents-differ-between-prefect-1-0-and-2-0/689)
 
 We launch an agent with the following command. The agent will automatically run our scheduled workflow.
+
+deployment to the python file
+```bash
+
+prefect deployment build etl_web_to_gcs.py:etl_web_to_gcs -n "q2" -a
+```
 ```
 prefect agent start --work-queue "default"
 ```
