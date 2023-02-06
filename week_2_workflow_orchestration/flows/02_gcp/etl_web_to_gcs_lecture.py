@@ -14,7 +14,7 @@ def fetch(dataset_url: str) -> pd.DataFrame:
     # if randint(0, 1) > 0:
     #     raise Exception
 
-    df = pd.read_csv(dataset_url)
+    df = pd.read_csv(dataset_url) 
     return df
 
 
@@ -27,14 +27,14 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
     print(df.head(2))
     print(f"columns: {df.dtypes}")
-    print(f"rows: {len(df)}")
+    print(f"log print rows: {len(df)}")
     return df
 
 
 @task()
 def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     """Write DataFrame out locally as parquet file"""
-    path = PurePosixPath("data",color,f"{dataset_file}.parquet")
+    path = PurePosixPath("week_2_workflow_orchestration","data",color,f"{dataset_file}.parquet")
     #path = os.path.join("data",color,f"{dataset_file}.parquet")
     df.to_parquet(path, compression="gzip")
     return path
@@ -44,7 +44,7 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
 @task()
 def create_local_folders(color: str) -> None:
     """ Create data folder for color if not existing"""
-    outdir = os.path.join('data', color)
+    outdir = os.path.join('week_2_workflow_orchestration','data', color)
     if not os.path.exists(outdir):
         os.mkdir(outdir)
 
@@ -63,7 +63,7 @@ def etl_web_to_gcs() -> None:
 
     color = "green"
     year = 2020
-    month = 1
+    month = 11
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 
