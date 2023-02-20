@@ -23,7 +23,7 @@ from datetime import timedelta
 @task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
 def fetch(dataset_url: str) -> pd.DataFrame:
     """Read fhv_tripdata from web into pandas DataFrame"""
-    df = pd.read_csv(dataset_url)
+    df = pd.read_csv(dataset_url, encoding='windows-1252')
     return df
 
 
@@ -84,7 +84,7 @@ def etl_parent_flow(
 
 if __name__ == "__main__":
     
-    months = list(np.arange(1, 13))
-    year = 2019
+    months = list(np.arange(2, 3))
+    year = 2020
     etl_parent_flow(months, year)
 
