@@ -12,7 +12,7 @@ def extract_from_gcs(color: str, year: int, month: int) -> Path:
     gcs_block = GcsBucket.load("zoomcamp-prefect-gcs")
     gcs_block.get_directory(from_path=gcs_path, local_path="./week_2_workflow_orchestration/")
     print(gcs_path)
-    return path(f"week_2_workflow_orchestration/{gcs_path}")
+    return Path(f"week_2_workflow_orchestration/{gcs_path}")
 
 
 @task()

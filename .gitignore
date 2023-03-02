@@ -19,3 +19,5 @@ serving_dir
 **/week_2_workflow_orchestration/data/*
 **/week_3_data_warehouse/data/*
 #**/week_2_workflow_orchestration\data\*
+
+.databricks

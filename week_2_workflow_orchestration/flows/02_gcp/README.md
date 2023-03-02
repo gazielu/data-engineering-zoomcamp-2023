@@ -36,6 +36,28 @@ A workflow orchestration tool allows us to manage and visualize dataflows, while
 **Step 1:** start PostgreSQL and ingest the Yellow Taxi Data (see [my notes from week1](../week1/README.md)). Note that we need to run the scripts manually. It would be much better if this script was run on a schedule, without the need to manually trigger it. By using some workflow orchestration tool, we can run scripts on a schedule and also have other advantages (resilience, automatic retries, caching, etc).
 
 **Step 2:** transform [ingest_data.py](../week1/ingest_data.py) into a Prefect flow. For such, we move all code under ```if __name__ == '__main__``` to a function ```main_flow()```. Then, we use the ```flow``` decorator to indicate that ```main_flow()``` is a Prefect flow. According to the instructor, a flow consists of a container for workflow logic that we can use to interact and understand the state of the workflow. They receive inputs, perform a set of tasks and returns outputs. In addition, we use the ```@task``` decorator to indicate that ```ingest()``` is a task from our flow. See [ingest_data_flow.py](./ingest_data_flow.py). Then, we run this new code:
+
+conda activation (uri-notes)  > if we want ipkernal in the prefect env
+```
+conda install -n prefect-env ipykernel --update-deps --force-reinstall
+```
+```
+
+# prefect orion start
+# conda deactivate
+```
+(one time) prefect create new profile and set local PREFECT_API_URL="http://127.0.0.1:4201/api"
+```
+source activate prefect-env
+prefect profile ls
+prefect profile create local
+prefect profile use 'local'
+prefect config set PREFECT_API_URL="http://127.0.0.1:4201/api"
+prefect orion start --port 4201
+prefect profile inspect
+prefect cloud logout
+
+```
 ```
 python ingest_data_flow.py
 ```

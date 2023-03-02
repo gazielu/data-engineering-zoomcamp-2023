@@ -25,13 +25,17 @@ spark = SparkSession.builder \
     .appName('test') \
     .getOrCreate()
 
-df_green = spark.read.parquet(input_green)
+# df_green = spark.read.parquet(input_green)
+# df_green = spark.read.csv(input_green)
+df_green = spark.read.format("csv").option("header","true").load(input_green)
 
 df_green = df_green \
     .withColumnRenamed('lpep_pickup_datetime', 'pickup_datetime') \
     .withColumnRenamed('lpep_dropoff_datetime', 'dropoff_datetime')
 
-df_yellow = spark.read.parquet(input_yellow)
+#df_yellow = spark.read.parquet(input_yellow)
+#df_yellow = spark.read.csv(input_yellow)
+df_yellow = spark.read.format("csv").option("header","true").load(input_yellow)
 
 
 df_yellow = df_yellow \
