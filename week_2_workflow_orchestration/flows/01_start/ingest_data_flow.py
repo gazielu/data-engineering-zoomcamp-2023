@@ -61,3 +61,39 @@ def main_flow(table_name: str = "yellow_taxi_trips"):
 
 if __name__ == '__main__':
     main_flow(table_name = "yellow_trips")
+
+
+
+CREATE TABLE spark_catalog.default.fhvhv_tripdata (
+
+
+  StructField(hvfhs_license_num STRING,
+  StructField(dispatching_base_num STRING,
+  StructField(originating_base_num STRING,
+  StructField(request_datetime TIMESTAMP,
+  StructField(on_scene_datetime TIMESTAMP,
+  StructField(pickup_datetime TIMESTAMP,
+  StructField(dropoff_datetime TIMESTAMP,
+  StructField(PULocationID BIGINT,
+  StructField(DOLocationID BIGINT,
+  StructField(trip_miles DOUBLE,
+  StructField(trip_time BIGINT,
+  StructField(base_passenger_fare DOUBLE,
+  StructField(tolls DOUBLE,
+  StructField(bcf DOUBLE,
+  StructField(sales_tax DOUBLE,
+  StructField(congestion_surcharge DOUBLE,
+  StructField(airport_fee DOUBLE,
+  StructField(tips DOUBLE,
+  StructField(driver_pay DOUBLE,
+  StructField(shared_request_flag STRING,
+  StructField(shared_match_flag STRING,
+  StructField(access_a_ride_flag STRING,
+  StructField(wav_request_flag STRING,
+  StructField(wav_match_flag STRING)
+USING delta
+TBLPROPERTIES (
+  'Type' = 'MANAGED',
+  'delta.minReaderVersion' = '1',
+  'delta.minWriterVersion' = '2')
+
