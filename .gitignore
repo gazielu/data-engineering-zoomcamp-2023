@@ -14,6 +14,7 @@
 serving_dir
 *.csv
 *.gz
+.ssh
 .ipynb_checkpoints/
 !week_6_stream_processing/avro_example/data/rides.csv
 **/week_2_workflow_orchestration/data/*
@@ -21,3 +22,5 @@ serving_dir
 #**/week_2_workflow_orchestration\data\*
 
 .databricks
+
+
